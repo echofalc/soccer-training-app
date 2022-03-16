@@ -1,7 +1,7 @@
 import "./App.css";
 import Login from "./components/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { PlayerScreen } from "./components/PlayerScreen";
+import PlayerScreen from "./components/PlayerScreen";
 import { Container, Button } from "react-bootstrap";
 
 

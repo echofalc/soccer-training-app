@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Button, Container } from "react-bootstrap";
-
 import "./Login.css";
 import { auth, provider } from "../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  let navigate = useNavigate();
+
   const signIn = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {})
+      .then((result) => {
+        navigate('/player')
+        console.log(result);
+      })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -33,7 +38,6 @@ function Login() {
               },
               color: "blue",
               borderColor: "black",
-            
             }}
             onClick={() => signIn()}
             variant="outlined"
