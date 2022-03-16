@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import "./Login.css"
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import { Button, Container } from "react-bootstrap";
 
-export default function Login() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+import "./Login.css";
+import { auth, provider } from "../firebase";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { Link } from "react-router-dom";
+import "./Login.css";
 
-    function validateForm() {
-        return email.length > 0 && password.length > 0
-    }
+function Login() {
+  const signIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {})
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
 
-    function handleSubmit(event) {
-        event.preventDefault()
-    }
-
-    return (
-        <div className='Login'>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size='lg' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type='email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size='lg' controlId='password'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type='password'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-                <Button block size='lg' type='submit' disabled={!validateForm()}>
-                    Login
-                </Button>
-            </Form>
-        </div>
-    )
+        const email = error.email;
+      });
+  };
+  return (
+    <div>
+      <h1 style={{ alignText: "center" }}>Welcome to Soccer Training Beta!</h1>
+      <Container className="Login">
+        <Container className="Login-form">
+          <Button
+            sx={{
+              "&:hover": {
+                borderColor: "purple",
+                backgroundColor: "#f2d5f2",
+                color: "White",
+              },
+              color: "blue",
+              borderColor: "black",
+            
+            }}
+            onClick={() => signIn()}
+            variant="outlined"
+          >
+            Sign in with Google
+          </Button>
+        </Container>
+      </Container>
+    </div>
+  );
 }
+
+export default Login;
